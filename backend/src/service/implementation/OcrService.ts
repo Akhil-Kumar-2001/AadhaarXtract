@@ -3,6 +3,7 @@
 import { IOcrResult } from '../../interface/IOcrResult';
 import { extractOcrText } from '../../utils/aadhaarOcr';
 import { extractAadhaarDetails, mergeAadhaarDetails } from '../../utils/aadhaarParser';
+import { deleteImages } from '../../utils/fileUpdate';
 import IOcrService from '../interface/IOcrService';
 
 class OcrService implements IOcrService {
@@ -44,6 +45,8 @@ class OcrService implements IOcrService {
         stack: error instanceof Error ? error.stack : undefined
       });
       throw new Error(`OCR processing failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally{
+      await deleteImages(frontImage.path, backImage.path);
     }
   }
 
