@@ -1,7 +1,8 @@
 # AadhaarXtract 🔍
 
-![Made with React](https://img.shields.io/badge/Made%20with-React-blue.svg) ![Node.js](https://img.shields.io/badge/Backend-Node.js-brightgreen.svg)
-
+![Made with React](https://img.shields.io/badge/Frontend-React-blue.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-Enabled-blue.svg)
+![Node.js](https://img.shields.io/badge/Backend-Node.js%20%26%20Express-brightgreen.svg)
 **AadhaarXtract** is a modern, web-based application designed to securely and efficiently extract essential details from Aadhaar documents. It combines advanced algorithms with a clean interface to give you fast, reliable, and private data extraction from Aadhaar cards.
 
 ---
