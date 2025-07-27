@@ -1,0 +1,50 @@
+# Node modules
+node_modules/
+backend/node_modules/
+client/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+backend/.env
+client/.env
+
+# Build outputs
+dist/
+build/
+backend/dist/
+client/dist/
+client/build/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Uploads
+uploads/
+
+# TypeScript
+*.tsbuildinfo
+
+# Cache
+.cache/
+tmp/
+temp/
+
+# IDE specific
+.vscode/
+.idea/
+
+# Frontend specific
+client/public/hot/
+client/.vite/
+client/.next/
+
+# Misc
+*.swp
