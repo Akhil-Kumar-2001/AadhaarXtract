@@ -169,17 +169,18 @@ function extractAddressGeneric(text: string): string | undefined {
   const fatherNameMatch = soLine.match(/(S\/O|D\/O|W\/O)[:\s]*([A-Za-z\s]+?)(?:,|$)/i);
   const fatherName = fatherNameMatch ? fatherNameMatch[2].trim() : '';
 
-  // Collect all text after S/O line until PIN
+  // Collect all text after S/O line including PIN
   let addressText = '';
-  let foundPin = false;
+  let pinCode = '';
 
-  for (let i = startIdx; i < lines.length && !foundPin; i++) {
+  for (let i = startIdx; i < lines.length; i++) {
     const line = lines[i];
 
-    // Check for PIN code (6 digits) - this usually marks the end
-    if (/\b\d{6}\b/.test(line)) {
-      foundPin = true;
-      // Add the line but remove PIN
+    // Check for PIN code (6 digits) and extract it
+    const pinMatch = line.match(/\b(\d{6})\b/);
+    if (pinMatch) {
+      pinCode = pinMatch[1];
+      // Add the line but remove PIN for address processing
       const lineWithoutPin = line.replace(/\d{6}.*$/, '').trim();
       if (lineWithoutPin) {
         addressText += ' ' + lineWithoutPin;
@@ -323,7 +324,7 @@ function extractAddressGeneric(text: string): string | undefined {
   });
 
   // Build final address
-  if (uniqueComponents.length === 0) return undefined;
+  if (uniqueComponents.length === 0 && !pinCode) return undefined;
 
   // Clean up the components one more time
   const finalComponents = uniqueComponents
@@ -333,7 +334,13 @@ function extractAddressGeneric(text: string): string | undefined {
       !isOCRArtifact(comp)
     );
 
-  const finalAddress = finalComponents.join(', ');
+  // Build the address string
+  let finalAddress = finalComponents.join(', ');
+  
+  // Add PIN code at the end if found
+  if (pinCode) {
+    finalAddress = finalAddress ? `${finalAddress} - ${pinCode}` : pinCode;
+  }
 
   return fatherName ? `S/O: ${fatherName}, ${finalAddress}` : finalAddress;
 }
